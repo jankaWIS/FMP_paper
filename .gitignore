@@ -1,0 +1,13 @@
+# ignore compilation files
+Code/functions/__pycache__/*.pyc
+
+# ignore notebook checkpoints 
+Code/.ipynb_checkpoints/*.ipynb
+Figures/.ipynb_checkpoints/*.ipynb
+
+# ignore vent
+.idea/*
+venv/*
+
+# ignore data
+Data/*
