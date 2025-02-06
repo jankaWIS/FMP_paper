@@ -75,3 +75,27 @@ def calculate_d_prime(df, signal, noise, n_signal, n_noise, col='correct_respons
         return out
 
     return df_d['hit'] - df_d['FA']
+
+
+def get_z_value(p_value, tailed='two'):
+    """
+    Calculate the z-value corresponding to a given p-value for a one-tailed or two-tailed test.
+
+    Parameters
+    ----------
+    p_value: float, the p-value that I want to get (e.g., 0.05)
+    tailed: str, optional, default is two, 'one' for one-tailed test, 'two' for two-tailed test
+
+    Returns
+    ----------
+    corresponding z-value
+    """
+    if tailed == 'two':
+        # for two-tailed test, divide p-value by 2 for each tail
+        z_value = norm.ppf(1 - p_value / 2)
+    elif tailed == 'one':
+        z_value = norm.ppf(1 - p_value)
+    else:
+        raise ValueError("Invalid value for 'tailed'. Use 'one' or 'two'.")
+
+    return z_value
