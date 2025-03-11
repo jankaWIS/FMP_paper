@@ -176,14 +176,14 @@ def plot_FMP_results_slopes(data, ax, flattened_palette,
     title : str, optional, default is an empty string, title of the plot, displayed at the top.
     legend_kwargs: dict, optional, default None, additional keyword arguments for ax.legend().
 
-    The function modifies the provided Axes object in-place, adding bars, points, lines, and other customizations.
+    The function modifies the provided Axes object in-place, adding bars, points, lines, and other customisations.
 
     Notes
     -----
     - The function first plots bars representing mean performance across difficulty levels for each task condition,
       then overlays individual data points using a strip plot.
     - A dashed line indicating the chance level (0.5) is added.
-    - Colors of bars and points are customized to match the provided palette.
+    - Colours of bars and points are customised to match the provided palette.
     - Slopes are calculated and plotted for each task condition to illustrate performance trends.
     """
     # plot bars and add individual points
@@ -274,11 +274,11 @@ def plot_FMP_results_slopes(data, ax, flattened_palette,
 
 def get_flattened_palette(hue_order):
     """
-    This function creates a color palette for three difficulty levels for each task
+    This function creates a colour palette for three difficulty levels for each task
     specified in the `hue_order` list. The four predefined tasks are:
     ['face matching', 'delay', 'math', 'interference']. Each task is associated
-    with a specific color, and the three difficulty levels are represented by
-    varying shades of that color using different alpha values.
+    with a specific colour, and the three difficulty levels are represented by
+    varying shades of that colour using different alpha values.
 
     Parameters
     ----------
@@ -289,12 +289,12 @@ def get_flattened_palette(hue_order):
 
     Returns
     -------
-    flattened_palette: list of tuple, list of RGBA tuples representing the colors for each task at three
-        difficulty levels. Each task has three corresponding colors in the order of difficulty levels (high, medium, low).
+    flattened_palette: list of tuple, list of RGBA tuples representing the colours for each task at three
+        difficulty levels. Each task has three corresponding colours in the order of difficulty levels (high, medium, low).
 
     Notes
     -----
-    - The predefined task names are mapped to their corresponding colors as follows:
+    - The predefined task names are mapped to their corresponding colours as follows:
         - 'face matching': Dark blue shades.
         - 'delay': Orange shades.
         - 'math': Teal shades.
