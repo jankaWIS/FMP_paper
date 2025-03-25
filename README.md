@@ -5,7 +5,9 @@
 
 ---
 #### Associated bioarxiv paper
+*Behavioural separation of face memory and face perception*
 
+Jan Kadlec, Catherine Walsh, Meytal Wilf, Jesse Rissman, Michal Ramot, bioRxiv 2025.02.17.638018; doi: [[https://doi.org/10.1101/2023.07.03.547563](https://doi.org/10.1101/2023.07.03.547563)](https://www.biorxiv.org/content/10.1101/2025.02.17.638018).
 
 ---
 #### Associated ZENODO repository
