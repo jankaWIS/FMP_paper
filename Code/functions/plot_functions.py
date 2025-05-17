@@ -194,9 +194,9 @@ def plot_FMP_results_slopes(data, ax, flattened_palette,
 
     stripplot = sns.stripplot(x='difficulty', y='correct_flt',
                               data=data.groupby(['userID', 'task', 'difficulty']).correct_flt.mean().reset_index(),
-                              edgecolor='k', hue='task', dodge=True, hue_order=hue_order,  # color='white', alpha=0.2,
-                              palette=flattened_palette,
-                              ax=ax, size=3, linewidth=0.3, legend=False,
+                              edgecolor='w', hue='task', dodge=True, hue_order=hue_order,
+                              color='k', #alpha=0.2, palette=flattened_palette,
+                              ax=ax, size=3.3, linewidth=0.3, legend=False,
                               )
 
     # add chance level line
@@ -206,12 +206,12 @@ def plot_FMP_results_slopes(data, ax, flattened_palette,
     for bar, color in zip(bars.patches, flattened_palette):
         bar.set_facecolor(color)
 
-    # get reversed colour names
-    reordered_palette_rev = map_rev_palette(flattened_palette)
-
-    # repaint the points
-    for point, color in zip(stripplot.collections, reordered_palette_rev):
-        point.set_facecolor(color)
+    # # get reversed colour names
+    # reordered_palette_rev = map_rev_palette(flattened_palette)
+    #
+    # # # repaint the points
+    # # for point, color in zip(stripplot.collections, reordered_palette_rev):
+    # #     point.set_facecolor(color)
 
     # legend
     if plot_legend:
@@ -261,7 +261,7 @@ def plot_FMP_results_slopes(data, ax, flattened_palette,
         space = np.linspace(x_coor[i].min(), x_coor[i].max(), 50)
         # this is the actual prediction
         space1 = np.linspace(x.min(), x.max(), 50)
-        ax.plot(space, space1 * slope + intercept, color=flattened_palette[i * 3], linewidth=2, zorder=2)
+        ax.plot(space, space1 * slope + intercept, color=flattened_palette[i * 3], linewidth=2, zorder=4)
 
     # label axis and update limits
     ax.set_ylabel("Accuracy")
