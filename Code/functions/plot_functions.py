@@ -307,13 +307,15 @@ def get_flattened_palette(hue_order):
     rename_tasks_dic_reverse = {'Matching': 'face matching',
                                 'Unfilled Delay': 'delay',
                                 'Filled Delay - emotions': 'interference',
-                                'Filled Delay - math': 'math'}
+                                'Filled Delay - math': 'math',
+                                'Filled Delay - vege': 'vege',}
 
     # define a dictionary to map each task to its corresponding colour
     color_map = {
         'face matching': [(0, 0, 0.55)] * 3,
         'delay': [(0.94, 0.57, 0.095)] * 3,
         'math': [(0.0, 0.5, 0.5)] * 3,
+        'vege': [(0.42, 0.44, 0.34)] * 3,
         'interference': [(0.79, 0.093, 0.11)] * 3,
     }
 
