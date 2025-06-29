@@ -550,8 +550,33 @@ def plot_cue_stimulus_slopes(df_plot_longitudinal, axes, hue_order, bbox_to_anch
         sns.despine(ax=ax)
 
 
-def plot_cue_stim_by_task(df_select, axes, hue_order, bbox_to_anchor=(1.63, 1.1)):
+def plot_cue_stim_by_task(df_select, axes, hue_order, bbox_to_anchor=(1.63, 1.1), doubled_palette=None):
     flattened_palette = get_flattened_palette(hue_order)
+
+    if doubled_palette is None:
+        # define colours to recolour bars
+        doubled_palette = [
+            (0, 0, 0.55, 1),
+            (0, 0, 0.55, 0.65),
+            (0, 0, 0.55, 0.33),
+            (0, 0, 0.55, 1),
+            (0, 0, 0.55, 0.65),
+            (0, 0, 0.55, 0.33),
+            #
+            (0.94, 0.57, 0.095, 1),
+            (0.94, 0.57, 0.095, 0.65),
+            (0.94, 0.57, 0.095, 0.33),
+            (0.94, 0.57, 0.095, 1),
+            (0.94, 0.57, 0.095, 0.65),
+            (0.94, 0.57, 0.095, 0.33),
+            #
+            (0.79, 0.093, 0.11, 1),
+            (0.79, 0.093, 0.11, 0.65),
+            (0.79, 0.093, 0.11, 0.33),
+            (0.79, 0.093, 0.11, 1),
+            (0.79, 0.093, 0.11, 0.65),
+            (0.79, 0.093, 0.11, 0.33),
+        ]
 
     for (i, tsk), ax, cmap in zip(enumerate(hue_order), axes, flattened_palette):
 
