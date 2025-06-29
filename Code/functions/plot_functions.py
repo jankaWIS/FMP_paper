@@ -447,3 +447,197 @@ def plot_significance_pairs(num1, num2, p, ax,
     # Add the p-value annotation, mid is a tuple containing the x and y coordinates where the text annotation
     # (p-value or significance marker) will be placed on the plot. * will unpack the tuple
     ax.text(*mid, p_value_marker, **kwargs)
+
+
+def plot_cue_stimulus_slopes(df_plot_longitudinal, axes, hue_order, bbox_to_anchor=(1, 1.05), legend_kwargs=None):
+    # deal with optional keyword arguments to the legend
+    if legend_kwargs is None:
+        # it can't deal with None and the default should not be mutable, so if it's none, convert it here to {}
+        legend_kwargs = {}
+    elif not isinstance(legend_kwargs, dict):
+        raise TypeError("legend_kwargs must be a dictionary.")
+
+    # get the palette
+    flattened_palette = get_flattened_palette(hue_order)
+
+    # get number of ptc
+    N_total = df_plot_longitudinal['userID'].unique().size
+
+    for cue_stim, ax in zip(['unmorphed', 'morphed'], axes):
+        # choose only the relevant location
+        if cue_stim == 'unmorphed':
+            cue_stim_title = 'original (unmorphed)'
+            data = df_plot_longitudinal.loc[df_plot_longitudinal['target_loc_simple'] == "target_0"].copy()
+        else:
+            cue_stim_title = cue_stim
+            data = df_plot_longitudinal.loc[df_plot_longitudinal['target_loc_simple'] != "target_0"].copy()
+
+        # plot
+        bars = sns.barplot(x='difficulty', y='correct_flt', data=data,
+                           hue='task', hue_order=hue_order,
+                           palette=flattened_palette, edgecolor='k',
+                           ax=ax,
+                           )
+
+        stripplot = sns.stripplot(x='difficulty', y='correct_flt',
+                                  data=data.groupby(['userID', 'task', 'difficulty']).correct_flt.mean().reset_index(),
+                                  edgecolor='w', hue='task', hue_order=hue_order, dodge=True,
+                                  color='k',  # alpha=0.2, palette=flattened_palette,
+                                  ax=ax, size=2.8, linewidth=0.3, legend=False,
+                                  )
+
+        # add chance level line
+        ax.axhline(0.5, c='k', linestyle="--", label='chance level', zorder=4)
+
+        # repaint the bars
+        for bar, color in zip(bars.patches, flattened_palette):
+            bar.set_facecolor(color)
+
+        # repaint points
+        # for point, color in zip(stripplot.collections, map_rev_palette(flattened_palette)):
+        #     point.set_facecolor(color)
+
+        # deal with the legend
+        if cue_stim == 'morphed':
+            #             ax.legend(bbox_to_anchor=bbox_to_anchor, title='Task', frameon=False)
+            # Update the legend colors
+            legend = bars.legend_
+            legend_handles = legend.legendHandles
+
+            new_labels = []
+            for (i, handle), label in zip(enumerate(legend_handles), hue_order):
+                handle.set_facecolor(flattened_palette[i * 3 + 1])
+                new_labels.append(label.replace('delay', 'unfilled delay').title().replace(' - ', '\n'))
+
+            # regenerate the legend with updated labels on the axis level
+            ax.legend(handles=legend_handles, labels=new_labels, bbox_to_anchor=bbox_to_anchor,
+                      title=f'Task, N={N_total}', frameon=False, **legend_kwargs)
+
+        else:
+            ax.legend_.remove()
+
+        # set bcg colour
+        ax.set_facecolor((1, 1, 1, 0))
+
+        # change width of bars
+        change_width(ax, 0.24)
+
+        # add slopes
+        y = np.zeros(9)
+        x_coor = np.zeros(9)
+        for i, bar in enumerate(ax.patches):
+            if bar.get_height() != 0:
+                y[i] = bar.get_height()
+                # record also position
+                x_coor[i] = bar.get_x() + bar.get_width() / 2
+
+        x_coor = x_coor.reshape((3, 3))
+        y = y.reshape((3, 3))
+        x = np.array([1, 2, 3])
+        for i in range(x.shape[0]):
+            slope, intercept = np.polyfit(x, y[i], 1)
+
+            # add a line to the graph, first create space that accounts for the shifted bars
+            space = np.linspace(x_coor[i].min(), x_coor[i].max(), 50)
+            # this is the actual prediction
+            space1 = np.linspace(x.min(), x.max(), 50)
+            ax.plot(space, space1 * slope + intercept, color=flattened_palette[i * 3 + 1], linewidth=2, zorder=4)
+
+        ax.set_ylabel("Accuracy")
+        ax.set_xlabel("Perceptual difficulty level")
+        ax.set_title(f"{cue_stim_title}")
+
+        sns.despine(ax=ax)
+
+
+def plot_cue_stim_by_task(df_select, axes, hue_order, bbox_to_anchor=(1.63, 1.1)):
+    flattened_palette = get_flattened_palette(hue_order)
+
+    for (i, tsk), ax, cmap in zip(enumerate(hue_order), axes, flattened_palette):
+
+        bars = sns.barplot(x='difficulty', y='correct_flt', data=df_select[df_select['task'] == tsk],
+                           palette=flattened_palette, edgecolor='k',
+                           ax=ax,
+                           hue='target_loc_simple', hue_order=['original', 'morphed'], errorbar='se',
+                           )
+
+        stripplot = sns.stripplot(x='difficulty', y='correct_flt',
+                                  data=df_select[df_select['task'] == tsk].groupby(['userID', 'task', 'difficulty',
+                                                                                    'target_loc_simple']).correct_flt.mean().reset_index(),
+                                  edgecolor='w', hue='target_loc_simple', hue_order=['original', 'morphed'], dodge=True,
+                                  color='k',  # alpha=0.2, palette=flattened_palette,
+                                  ax=ax, size=4, linewidth=0.3, legend=False,
+                                  )
+
+        # add chance level line
+        #         ax.axhline(0.5, c='k', linestyle="--", label='chance level', zorder=4)
+        ax.axhline(0.5, c='k', linestyle="--", zorder=4)
+
+        #     # label the column height -- done separately to be able to avoid overlap with the bats
+        #     label_column_height(ax, 0.215, 0.04, size=small_fontsize)
+
+        # update naming
+        if tsk == 'delay':
+            tsk = 'unfilled delay'
+        ax.set_title(tsk.capitalize().replace(' - ', '\n'), y=1.04)
+
+        # set bcg colour
+        ax.set_facecolor((1, 1, 1, 0))
+
+        # change width of bars
+        change_width(ax, 0.4)
+
+        if i == 0:
+            ax.set_ylabel("Accuracy")
+        #         ax.set_ylim(0.5,1)
+        # label the column height
+        #         label_column_height(ax, 0.25, 0.04, size=small_fontsize)
+
+        else:
+            ax.set_ylabel("")
+            # label the column height
+        #         label_column_height(ax, 0.16, 0.04, size=small_fontsize)
+
+        if i == 1:
+            ax.set_xlabel("Perceptual difficulty level")
+        else:
+            ax.set_xlabel("")
+
+        # repaint the bars
+        for j, bar in enumerate(ax.patches):
+            if j < 6:
+                bar.set_facecolor(doubled_palette[j + i * 6])
+
+        # repaint points
+        # for j, point in enumerate(stripplot.collections):
+        #     if j<6:
+        #         point.set_facecolor(doubled_palette[j//2+i*6])
+
+        ## hatching
+        #     hatches = ['-', '+', 'x', '\\', '*', '.']
+        hatches = ['/']
+
+        for (j, hatch_pattern), these_bars in zip(enumerate(hatches), ax.containers):
+            for this_bar in these_bars:
+                this_bar.set_hatch(2 * hatch_pattern)
+
+        if i == 2:
+            # legend, https://stackoverflow.com/questions/53849888/make-patches-bigger-used-as-legend-inside-matplotlib
+            leg = ax.legend(title='', loc='upper right', frameon=False, bbox_to_anchor=bbox_to_anchor)
+
+            # make the legend to be squares
+            for j, patch in enumerate(leg.get_patches()):
+                #             patch.set_height(16)
+                #             patch.set_width(16)
+                #             patch.set_x(43)
+                # set colour and hatch
+                patch.set_facecolor('w')
+                if j == 0:
+                    patch.set_hatch(2 * hatch_pattern)
+        #         patch.set_x(5)
+        #         patch.set_y(-5)
+
+        else:
+            ax.legend([], [], frameon=False)
+
+        sns.despine(ax=ax)
