@@ -11,3 +11,4 @@ venv/*
 
 # ignore data
 Data/*
+Figures/morphs*/*.png
