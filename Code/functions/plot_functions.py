@@ -308,7 +308,8 @@ def get_flattened_palette(hue_order):
                                 'Unfilled Delay': 'delay',
                                 'Filled Delay - emotions': 'interference',
                                 'Filled Delay - math': 'math',
-                                'Filled Delay - veg': 'veg',}
+                                'Filled Delay - veg': 'veg',
+                                'Filled Delay - vis': 'vis',}
 
     # define a dictionary to map each task to its corresponding colour
     color_map = {
@@ -316,6 +317,7 @@ def get_flattened_palette(hue_order):
         'delay': [(0.94, 0.57, 0.095)] * 3,
         'math': [(0.0, 0.5, 0.5)] * 3,
         'veg': [(0.42, 0.44, 0.34)] * 3,
+        'vis': [(0.42, 0.44, 0.34)] * 3,
         'interference': [(0.79, 0.093, 0.11)] * 3,
     }
 
