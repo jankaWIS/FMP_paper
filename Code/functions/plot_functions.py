@@ -230,7 +230,7 @@ def plot_FMP_results_slopes(data, ax, flattened_palette,
         new_labels = []
         for i, (handle, label) in enumerate(zip(legend_handles, hue_order)):
             handle.set_facecolor(flattened_palette[i * 3 + 1])
-            new_labels.append(label.replace('delay', 'unfilled delay').title().replace(' - ', '\n'))
+            new_labels.append(label.replace('delay', 'unfilled delay').title().replace(' - ', '\n').replace('Vis', 'Visual'))
 
         # Regenerate the legend with updated labels on the axis level
         ax.legend(handles=legend_handles, labels=new_labels, title='Task', **legend_kwargs)
