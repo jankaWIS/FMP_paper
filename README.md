@@ -1,4 +1,4 @@
-# _Behavioural separation of face memory and face perception_: Codes and data to the article
+# _Behavioural separation of face memory and face perception_: Codes and data for the article
 
 ### Citation
 
