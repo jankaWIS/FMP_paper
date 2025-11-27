@@ -99,3 +99,39 @@ def get_z_value(p_value, tailed='two'):
         raise ValueError("Invalid value for 'tailed'. Use 'one' or 'two'.")
 
     return z_value
+
+def dprime_2afc(pc, n_trials=None, eps=1e-4, signed=True):
+    """
+    Uses d' = sqrt(2) * Phi^{-1}(Pc) to go from accuracy (Pc) to d' in 2AFC mapping
+    - allows Pc < 0.5 -> negative d' (opposite bias - "anti-sensitivity")
+    - applies log-linear correction at the bounds if n is given; otherwise clamps
+
+    Parameters
+    ----------
+    pc: array of accuracies (proportion/percent correct) in [0, 1] for signed and [0.5,1] for unsigned
+    n_trials: integer (or array), optional, for log-linear 'half-correction' at bounds
+    eps: float, optional, to prevent infinities when clamping if n_trials not provided
+    signed: bool, default True, if to allow for bias (i.e. accuracy < 0.5 chance level)
+
+    Returns
+    ----------
+    corresponding d'
+    """
+    p = np.asarray(pc, float)
+    if signed:
+        # keep below-chance values (allow negative d′)
+        pass
+    else:
+        # clip it from below at chance = 0.5
+        p = np.maximum(p, 0.5)
+
+    if n_trials is not None:
+        # log-linear (Haldane–Anscombe( correction to avoid infinities at edges (0/1)
+        k = np.round(p * n_trials)
+        # pseudocount correction
+        p = (k + 0.5) / (n_trials + 1.0)
+    else:
+        # small clip only if no n_trials was provided
+        p = np.clip(p, eps, 1 - eps)
+
+    return np.sqrt(2) * norm.ppf(p)
