@@ -180,8 +180,8 @@ def plot_FMP_results_slopes(data, ax, flattened_palette,
 
     Notes
     -----
-    - The function first plots bars representing mean performance across difficulty levels for each task condition,
-      then overlays individual data points using a strip plot.
+    - The function first plots bars representing mean performance across difficulty levels for each task condition with
+      standard error of the mean (SEM), then overlays individual data points using a strip plot.
     - A dashed line indicating the chance level (0.5) is added.
     - Colours of bars and points are customised to match the provided palette.
     - Slopes are calculated and plotted for each task condition to illustrate performance trends.
@@ -189,7 +189,7 @@ def plot_FMP_results_slopes(data, ax, flattened_palette,
     # plot bars and add individual points
     bars = sns.barplot(x='difficulty', y='correct_flt', data=data,
                        hue='task', hue_order=hue_order, palette=flattened_palette, edgecolor='k',
-                       ax=ax,
+                       ax=ax, errorbar='se',
                        )
 
     stripplot = sns.stripplot(x='difficulty', y='correct_flt',
