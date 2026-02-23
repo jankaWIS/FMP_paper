@@ -366,7 +366,6 @@ def plot_significance_pairs(num1, num2, p, ax,
     x_offset: float, optional, default to 0, how far from the center the line starts.
     fs: int, optional, font size for the significance annotation text. If None, default font size is used.
 
-
     """
 
     # Determine the marker for the p-value
@@ -553,6 +552,24 @@ def plot_cue_stimulus_slopes(df_plot_longitudinal, axes, hue_order, bbox_to_anch
 
 
 def plot_cue_stim_by_task(df_select, axes, hue_order, bbox_to_anchor=(1.63, 1.1), doubled_palette=None):
+    """
+    Plot accuracy by perceptual difficulty and target location separately for each task.
+
+    This function creates two bars - plain and hatched, split by target location ("original" vs "morphed") -
+    and strip plot (participants' means) per task (defined in `hue_order`), showing mean accuracy with standard
+    error of the mean (SEM) across perceptual difficulty levels. Bars are recolored manually, and a chance-level
+    line (0.5) is added. The legend is shown only for the last axis.
+
+    Parameters
+    ----------
+    df_select: pandas.DataFrame, df containing at least the following columns:
+        ['userID', 'task', 'difficulty', 'target_loc_simple', 'correct_flt'] where`correct_flt` is accuracy (0–1).
+    axes: array-like of matplotlib.axes.Axes (one per task) on which the plots will be drawn, must match the length of `hue_order`.
+    hue_order: list of str, ordered list of task names to plot. Determines subplot order.
+    bbox_to_anchor: tuple of float, optional, default (1.63, 1.1), position of the legend anchor (used only for the last subplot).
+    doubled_palette: list of RGBA tuples, optional, custom list of bar face colors used to manually recolor bars.
+        If None, a default palette with varying alpha levels per task is generated internally.
+    """
     flattened_palette = get_flattened_palette(hue_order)
 
     if doubled_palette is None:
