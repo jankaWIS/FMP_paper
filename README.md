@@ -2,6 +2,7 @@
 
 ### Citation
 
+To be added.
 
 ---
 #### Associated bioarxiv paper
@@ -12,7 +13,7 @@ Jan Kadlec, Catherine Walsh, Meytal Wilf, Jesse Rissman, Michal Ramot, bioRxiv 2
 ---
 #### Associated ZENODO repository
 
-
+To be added, currently `10.5281/zenodo.18741334`.
 
 ## Author
 
@@ -24,13 +25,13 @@ The organization of this project is as follows:
 
 ```
 ├── Code                     <- All code and functions used in the manuscript.
-├── Data                     <- Not part of this repository, saved at TODO but the code assumes this folder.
+├── Data                     <- Not part of this repository, saved in a Zenodo repository, but the code assumes this folder.
 ├── Figures                  <- Code to generate the figures and the figures.
 ```
 
 Some folders have their own README files that contain all relevant information necessary to reproduce the findings.
 
 ## Data
-There are no data in this repository for size limitations and are stored at TODO. For more details, see README there.
+There are no data in this GitHub repository due to size limitations, and they are stored at Zenodo (currently `10.5281/zenodo.18741334`). For more details, see README there or the section above.
 
 ---
