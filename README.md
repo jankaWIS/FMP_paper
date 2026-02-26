@@ -13,7 +13,7 @@ Jan Kadlec, Catherine Walsh, Meytal Wilf, Jesse Rissman, Michal Ramot, bioRxiv 2
 ---
 #### Associated ZENODO repository
 
-To be added, currently `10.5281/zenodo.18741334`.
+[![DOI](https://zenodo.org/badge/658647441.svg)](https://zenodo.org/doi/10.5281/zenodo.15847361)
 
 ## Author
 
@@ -32,6 +32,6 @@ The organization of this project is as follows:
 Some folders have their own README files that contain all relevant information necessary to reproduce the findings.
 
 ## Data
-There are no data in this GitHub repository due to size limitations, and they are stored at Zenodo (currently `10.5281/zenodo.18741334`). For more details, see README there or the section above.
+There are no data in this GitHub repository due to size limitations, and they are stored at Zenodo (`10.5281/zenodo.15847361`). For more details, see README there or the section above.
 
 ---
