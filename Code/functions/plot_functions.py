@@ -8,8 +8,7 @@ import seaborn as sns
 from scipy import stats
 
 
-def label_correlation(x, y, ax, xy=(.08, .85), plot_corr=True, **kwargs):
-    # TODO - validate and test the change with kwargs
+def label_correlation(x, y, ax, xy=(.08, .85), plot_corr=True, rounded_nature_p=False, **kwargs):
     """
     Label plot with correlation, returns the correlation values and the p-value
     Parameters
@@ -19,6 +18,7 @@ def label_correlation(x, y, ax, xy=(.08, .85), plot_corr=True, **kwargs):
     ax: matplotlib axis to be annotated
     xy: tuple of floats <0,1>, position of the label of the correlation
     plot_corr: bool, default True, whether to plot the correlation
+    rounded_nature_p: bool, default False, whether to show p-val rounded to the third decimal with smaller values shown as "p<0.001"
 
     Returns
     -------
@@ -31,7 +31,14 @@ def label_correlation(x, y, ax, xy=(.08, .85), plot_corr=True, **kwargs):
     r, p = stats.pearsonr(x[~nans], y[~nans])
     if plot_corr:
         ax = ax or plt.gca()
-        ax.annotate(f"r = {r:.2f}\np = {p:.2e}", xy=xy, xycoords=ax.transAxes, **kwargs)
+        if rounded_nature_p:
+            if p >= 0.001:
+                label = f"r = {r:.2f}\np = {p:.3f}"
+            else:
+                label = f"r = {r:.2f}\np < 0.001"
+            ax.annotate(label, xy=xy, xycoords=ax.transAxes, **kwargs)
+        else:
+            ax.annotate(f"r = {r:.2f}\np = {p:.2e}", xy=xy, xycoords=ax.transAxes, **kwargs)
     return r, p
 
 
