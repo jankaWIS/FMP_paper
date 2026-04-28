@@ -13,7 +13,13 @@ Jan Kadlec, Catherine Walsh, Meytal Wilf, Jesse Rissman, Michal Ramot, bioRxiv 2
 ---
 #### Associated ZENODO repository
 
-[![DOI](https://zenodo.org/badge/658647441.svg)](https://zenodo.org/doi/10.5281/zenodo.15847361)
+Accepted and in print:
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19861057.svg)](https://doi.org/10.5281/zenodo.19861057)
+
+
+Latest:
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15847361.svg)](https://doi.org/10.5281/zenodo.15847361)
+
 
 ## Author
 
