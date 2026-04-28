@@ -2,7 +2,7 @@
 
 ### Citation
 
-To be added.
+Kadlec, J., Walsh, C. R., Wilf, M., Rissman, J. & Ramot, M. Behavioural separation of face memory and face perception. _Nature Communications_ [https://doi.org/10.1038/s41467-026-72467-9 (2026)](https://doi.org/10.1038/s41467-026-72467-9 (2026)).
 
 ---
 #### Associated bioarxiv paper
